@@ -79,7 +79,7 @@ while getopts 'dhuv' opt; do
     ;;
 
   u)
-    update="$(curl -s "https://raw.githubusercontent.com/ymp3cli/ymp3cli/master/ymp3cli.sh" | diff -u "$0" -)"
+    update="$(curl -s "https://raw.githubusercontent.com/FlamesX-128/ymp3cli.sh/master/ymp3cli.sh" | diff -u "$0" -)"
 
     [ -z "$update" ] && printf 'The cli is already on the latest version.'
 

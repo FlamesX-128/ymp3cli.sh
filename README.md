@@ -31,7 +31,7 @@ This is how "ymp3cli.sh" looks.
 #### **Using curl**
 
 ```bash
-$ curl https://raw.githubusercontent.com/FlamesX-128/ymp3cli/master/ymp3cli.sh --output ymp3cli.sh
+$ curl https://raw.githubusercontent.com/FlamesX-128/ymp3cli.sh/master/ymp3cli.sh --output ymp3cli.sh
 ```
 
 ```bash
