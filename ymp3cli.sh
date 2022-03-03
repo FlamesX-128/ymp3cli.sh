@@ -34,7 +34,7 @@ audioplayer="mpv"
 dependencies=("curl" "mpv" "tput" "spotdl" "youtube-dl")
 devDependencies=()
 
-version="1.0.0"
+version="1.0.1"
 
 ### END OF PROJECT INFO ###
 
@@ -81,7 +81,7 @@ while getopts 'dhuv' opt; do
   u)
     update="$(curl -s "https://raw.githubusercontent.com/FlamesX-128/ymp3cli.sh/master/ymp3cli.sh" | diff -u "$0" -)"
 
-    [ -z "$update" ] && printf 'The cli is already on the latest version.'
+    [ -z "$update" ] && printf 'The cli is already on the latest version.' && exit
 
     if printf '%s\n' "$update" | patch "$0" -; then
       printf 'The cli has been updated.'

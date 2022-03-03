@@ -4,6 +4,12 @@ Inspired in "paij0se/ymp3cli", "ymp3cli.sh" is a cli created in "shell script" t
 ## **⚠ WARNING ⚠**
 The original project is of [paij0se](https://github.com/paij0se), please go to the [ymp3cli](https://github.com/paij0se/ymp3cli) repository and give your star.
 
+## **v1.0.1 Changelog**
+These are the new features of v1.0.1.
+
+- When updating the cli, if it was already updated, it always threw "Can't update for some reason!".
+
+
 ## **Preview**
 This is how "ymp3cli.sh" looks.
 
