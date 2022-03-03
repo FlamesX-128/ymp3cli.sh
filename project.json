@@ -1,7 +1,7 @@
 {
   "name": "ymp3cli",
   "version": "1.0.0",
-  "description": "Inspired by \"paij0se/ymp3cli\", \"ymp3cli.sh\" is a cli created in \"shell script\" to download or listen to music/songs.",
+  "description": "Inspired in \"paij0se/ymp3cli\", \"ymp3cli.sh\" is a cli created in \"shell script\" to download or listen to music/songs.",
   "main": "ymp3cli",
   "repository": {
     "type": "git",

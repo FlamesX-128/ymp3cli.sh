@@ -1,5 +1,5 @@
 # **ymp3cli.sh**
-Inspired by "paij0se/ymp3cli", "ymp3cli.sh" is a cli created in "shell script" to download or listen to music/songs.
+Inspired in "paij0se/ymp3cli", "ymp3cli.sh" is a cli created in "shell script" to download or listen to music/songs.
 
 ## **⚠ WARNING ⚠**
 The original project is of [paij0se](https://github.com/paij0se), please go to the [ymp3cli](https://github.com/paij0se/ymp3cli) repository and give your star.
