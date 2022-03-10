@@ -41,7 +41,7 @@ while getopts 'dhuv' opt; do
   d)
     printf '%s\n' 'Dependencies:'
 
-    for dep in "${deps[@]}"; do
+    for dep in "${dependencies[@]}"; do
       printf '%s\n' " ↳ $dep"
 
     done
