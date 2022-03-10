@@ -10,7 +10,7 @@ The original project is of [paij0se](https://github.com/paij0se), please go to t
 These are the new features of v1.1.0.
 
 - New option to download music/sound from soundcloud using [flyingrub/scdl](https://github.com/flyingrub/scdl).
-- [ymp3cli](https://ymp3cli.tk/) stats integrated.
+- [ymp3cli.sh](https://ymp3cli.tk/) stats integrated.
 - Slight code optimization.
 
 ## **Preview**
