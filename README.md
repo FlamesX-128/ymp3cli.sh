@@ -16,11 +16,11 @@ These are the new features of v1.1.0.
 ## **Preview**
 This is how "ymp3cli.sh" looks.
 
-![image](https://user-images.githubusercontent.com/78381898/157584104-1e79fd53-fe68-42d0-96dd-f49ea74e7561.png)
+![ymp3cli.sh](https://user-images.githubusercontent.com/78381898/157584104-1e79fd53-fe68-42d0-96dd-f49ea74e7561.png)
 
-![image](https://user-images.githubusercontent.com/78381898/157584199-5bfbfd19-87d7-49f6-ae34-378a20d7455b.png)
+![ymp3cli.sh](https://user-images.githubusercontent.com/78381898/157584199-5bfbfd19-87d7-49f6-ae34-378a20d7455b.png)
 
-![image](https://user-images.githubusercontent.com/78381898/157584166-aff18b90-988f-4ed5-aa3b-6b720a5ceac8.png)
+![ymp3cli.sh](https://user-images.githubusercontent.com/78381898/157584166-aff18b90-988f-4ed5-aa3b-6b720a5ceac8.png)
 
 ## **Dependencies**
 "ymp3cli.sh" needs some dependencies.
