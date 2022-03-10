@@ -24,42 +24,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-### END OF LICENSE ###
 
+### GLOBAL VARIABLES ###
 
-### PROJECT INFO ###
+dependencies=('curl' 'diff' 'flyingrub/scdl' 'mpv' 'tput' 'spotdl' 'youtube-dl')
 
-audioplayer="mpv"
+main_directory="$PWD"
+musics=()
 
-dependencies=("curl" "mpv" "tput" "spotdl" "youtube-dl")
-devDependencies=()
+version='1.1.0'
 
-version="1.0.1"
-
-### END OF PROJECT INFO ###
-
-
-### ###
-
-print_options() {
-  while IFS= read -r line; do
-    printf '%s\n' "$line"
-  done <<-EOF
-
-  Download and listen songs/music from the console/terminal.
-
-  Usage:
-    ymp3cli.sh -d | -h | -v
-    ymp3cli.sh
-
-  Options:
-    -d  Show project dependencies.
-    -h  Show help about the cli.
-    -u  Update the cli.
-    -v  Show cli version.
-
-	EOF
-}
+### FLAG HANDLER ###
 
 while getopts 'dhuv' opt; do
   case "$opt" in
@@ -67,179 +42,238 @@ while getopts 'dhuv' opt; do
     printf '%s\n' 'Dependencies:'
 
     for dep in "${deps[@]}"; do
-      printf ' ↳ %s\n' "$dep"
+      printf '%s\n' " ↳ $dep"
+
     done
 
-    exit
     ;;
-
+  
   h)
-    print_options
-    exit
-    ;;
+    while IFS= read -r line; do
+      printf '%s\n' "${line: +4}"
 
+    done <<-EOF
+	    Download and listen music/songs from the console/terminal.
+
+      Usage:
+        ymp3cli.sh -d | -h | -u | -v
+        ymp3cli.sh
+
+      Flags:
+        -d  Show project dependencies.
+        -h  Show help about the cli.
+        -u  Update the cli.
+        -v  Show cli version.
+
+		EOF
+
+    ;;
+  
   u)
     update="$(curl -s "https://raw.githubusercontent.com/FlamesX-128/ymp3cli.sh/master/ymp3cli.sh" | diff -u "$0" -)"
 
-    [ -z "$update" ] && printf 'The cli is already on the latest version.' && exit
+    if [ -z "$update" ]; then
+      printf '%s\n' 'The cli is already on the latest version.'
 
-    if printf '%s\n' "$update" | patch "$0" -; then
-      printf 'The cli has been updated.'
+    elif printf '%s\n' "$update" | patch "$0" -; then
+      printf '%s\n' 'The cli was updated successfully.'
 
-      exit
+    else
+      printf '%s\n' 'The cli could not be updated due to an unknown error.'
+
     fi
 
-    printf '%s\n' "Can't update for some reason!"
-    exit
     ;;
 
   v)
-    printf 'ymp3cli.sh %s\n' "$version"
-    exit
+    printf '%s\n' "ymp3cli.sh v$version"
+
     ;;
   esac
+
+  exit
 done
 
-### ###
 
+### VALIDATOR FUNCTIONS ###
 
-### VALIDATORS ###
-
-validate_directory() {
-  [[ ! -d "music" ]] && mkdir -p 'music'
+validate_directory()
+{
+  [ ! -d 'music' ] && 
+    mkdir -p 'music'
 }
 
-validate_number() {
-  [ $1 -lt 1 ] || [ $1 -gt $2 ] &&
-    printf '%s\n' 'Invalid number entered.' && exit
-}
+validate_number()
+{
+  if [[ $1 =~ '^[0-9]+$' ]]; then
+    printf '%s\n' 'The element entered is not a number.'
 
-### END OF VALIDATORS ###
+    exit
+  elif [ $1 -lt 1 ] || [ $1 -gt $2 ]; then
+    printf '%s\n' "The number entered must be greater than 1 and less than $2"
+
+    exit
+  fi
+}
 
 
 ### FUNCTIONS ###
 
-clear_screen() {
-  if command -v tput &>/dev/null; then
+clean_screen()
+{
+  if command -v tput &> /dev/null; then
     tput clear
+
   fi
 }
 
-show_musics() {
+show_musics()
+{
   printf '%s\n' "$1:"
+
+  validate_directory
   musics=()
 
   for entry in 'music'/*; do
-    file="${entry: -4}"
+    local ext="${entry: -4}"
 
-    if [ "$file" == ".m4a" ] || [ "$file" == ".mp3" ]; then
-      printf ' ↳ %s\n' "[$((${#musics[@]} + 1))] ${entry: +6}"
+    if [ "$ext" = '.m4a' ] || [ "$ext" = '.mp3' ]; then
+      printf '%s %s\n' " ↳ [$(( ${#musics[@]} + 1 ))]" "${entry:6:-4}"
+
       musics+=("$entry")
-
     fi
 
   done
 }
 
-### END OF FUNCTIONS ###
-
 
 ### MAIN ###
 
+if command -v curl &> /dev/null; then
+  curl --silent -X POST \
+    --header "Content-Type: application/json" \
+    --data "{\"username\":\"$USER\",\"client\":\"ymp3cli.sh\"}" \
+    https://ymp3cli-api.herokuapp.com/ >&-
+fi
+
 while true; do
-  clear_screen
+  clean_screen
 
   printf '%s\n' 'What do you want to do?'
+  cd "$main_directory"
+
   i=1
 
   while IFS= read -r line; do
-    [ "$line" = "" ] && printf '%s\n' "$line" && continue
+    if [ "$line" = '' ]; then
+      printf '\n'
+  
+      continue
+    fi
 
-    printf '%s\n' "[$i] $line"
-    i=$(($i + 1))
+    printf '%s\n' " ↳ [$i] ${line:2}"
+    i=$(( i + 1 ))
+
   done <<-EOF
-  Download a music/song from Youtube.
-  Download a music/song from Spotify.
+    Download a music/song from Youtube.
+    Download a music/song from SoundCloud.
+    Download a music/song from Spotify.
 
-  Play all music/song.
-  Play multiple music/song.
-  Play a music/song.
+    Play all music/song.
+    Play multiple music/song.
+    Play a music/song.
 
-  Delete a music/song.
+    Delete a music/song.
 
-  Exit
+    Exit
+
 	EOF
 
-  printf '\n ↳ '
-  read -r rly
+  printf '%s' ' ↳ '
+  read -r resp
 
-  validate_number $rly 7
-  clear_screen
+  validate_number $resp 8
+  clean_screen
 
-  case $rly in
-  1 | 2)
-    printf '%s\n ↳ ' 'Enter the URL of the song/music:'
-    read -r rly2
+  case $resp in
+  1 | 2 | 3)
+    printf '%s\n ↳ ' 'Enter the URL of the music/song'
+    read -r resp2
 
     validate_directory
     cd 'music'
 
-    [[ "$rly" -eq 1 ]] &&
-      youtube-dl -f 'bestaudio[ext=m4a]' "$rly2" ||
-      spotdl --output-format='mp3' "$rly2"
+    if [ $resp -eq 1 ]; then
+      youtube-dl -f 'bestaudio[ext=m4a]' "$resp2"
 
-    cd ..
+    elif [ $resp -eq 2 ]; then
+      scdl "$resp2"
+
+    else
+      spotdl --output-format='mp3' "$resp2"
+
+    fi
+
     ;;
-
-  3)
-    show_musics 'Playing the following music/songs'
-    printf '\n'
+  
+  4)
+    show_musics 'Playing the following music/song'
 
     for file in "${musics[@]}"; do
       mpv --no-video "$file"
 
     done
-    ;;
 
-  4)
-    show_musics 'Enter the IDs of the songs/musics'
+    ;;
+  
+  5)
+    show_musics 'Enter the IDs of the music/song'
 
     printf ' ↳ '
-    read -r rly rly2
+    read -r resp resp2
 
-    validate_number $rly ${#musics[@]}
-    validate_number $rly2 ${#musics[@]}
-
-    for ((i = $((rly - 1)); i < $rly2; i++)); do
+    validate_number $resp ${#musics[@]}
+    validate_number $resp2 ${#musics[@]}
+  
+    for (( i = $(( resp - 1 )); i < $resp2; i++ )); do
       mpv --no-video "${musics[$i]}"
 
     done
+
     ;;
-
-  5)
-    show_musics 'Enter the URL/ID of the song/music'
-
-    printf ' ↳ '
-    read -r rly
-
-    [[ "$rly" =~ '^[!0-9]+$' ]] && mpv --no-video "$rly" && break
-
-    validate_number $rly ${#musics[@]}
-    mpv --no-video "${musics[$(($rly - 1))]}"
-    ;;
-
+  
   6)
-    show_musics 'Enter the ID of the song/music'
+    show_musics 'Enter the URL/ID of the music/song'
 
     printf ' ↳ '
-    read -r rly
+    read -r resp
 
-    validate_number $rly ${#musics[@]}
-    rm "${musics[$rly - 1]}"
+    if ! [[ "$resp" =~ '^[!0-9]+$' ]]; then
+      validate_number $resp ${#musics[@]}
+
+      mpv --no-video "${musics[$(( resp - 1 ))]}"
+
+    else
+      mpv --no-video "$resp"
+
+    fi
+
     ;;
-
+  
   7)
+    show_musics 'Enter the URL/ID of the music/song'
+
+    printf ' ↳ '
+    read -r resp
+
+    validate_number $resp ${#musics[@]}
+    rm "${musics[$rly - 1]}"
+
+    ;;
+  
+  8)
     printf '%s\n' 'Thanks for using ymp3cli.sh!'
+
     exit
     ;;
   esac

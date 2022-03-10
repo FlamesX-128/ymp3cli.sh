@@ -1,34 +1,40 @@
 # **ymp3cli.sh**
 Inspired in "paij0se/ymp3cli", "ymp3cli.sh" is a cli created in "shell script" to listen or download music/songs.
 
+
 ## **⚠ WARNING ⚠**
 The original project is of [paij0se](https://github.com/paij0se), please go to the [ymp3cli](https://github.com/paij0se/ymp3cli) repository and give your star.
 
-## **v1.0.1 Changelog**
-These are the new features of v1.0.1.
 
-- When updating the cli, if it was already updated, it always threw "Can't update for some reason!".
+## **v1.1.0 Changelog**
+These are the new features of v1.1.0.
 
+- New option to download music/sound from soundcloud using [flyingrub/scdl](https://github.com/flyingrub/scdl).
+- [ymp3cli](https://ymp3cli.tk/) stats integrated.
+- Slight code optimization.
 
 ## **Preview**
 This is how "ymp3cli.sh" looks.
 
-![Screenshot_2022-02-25-10-43-06_1440x900](https://user-images.githubusercontent.com/78381898/155829330-c87338e8-5233-4b8d-8dc1-0e3675f390c2.png)
+![image](https://user-images.githubusercontent.com/78381898/157584104-1e79fd53-fe68-42d0-96dd-f49ea74e7561.png)
 
-![Screenshot_2022-02-25-10-41-30_1440x900](https://user-images.githubusercontent.com/78381898/155829322-0a48c978-f108-4741-afd5-617822107fcb.png)
+![image](https://user-images.githubusercontent.com/78381898/157584199-5bfbfd19-87d7-49f6-ae34-378a20d7455b.png)
 
-![Screenshot_2022-02-25-10-44-31_1440x900](https://user-images.githubusercontent.com/78381898/155829364-a58481ff-8c84-4a85-bd13-ad85dcd62f38.png)
+![image](https://user-images.githubusercontent.com/78381898/157584166-aff18b90-988f-4ed5-aa3b-6b720a5ceac8.png)
 
 ## **Dependencies**
 "ymp3cli.sh" needs some dependencies.
 
-- `curl` ─ Required.
-
-- `youtube-dl` ─ Partially required.
-- `spotdl`─ Partially required.
+- `curl` ─ Partially required.
+- `diff` ─ Partially required.
 - `mpv` ─ Partially required.
 
+- `flyingrub/scdl` ─ Partially required.
+- `youtube-dl` ─ Partially required.
+- `spotdl`─ Partially required.
+
 - `tput` ─ Optional.
+
 
 ## **Installation**
 "ymp3cli.sh" can be installed in various ways, here are some examples:
@@ -53,6 +59,7 @@ $ git clone https://github.com/FlamesX-128/ymp3cli.sh && cd ymp3cli.sh
 $ sudo cp ymp3cli.sh /usr/local/bin/ymp3cli.sh
 ```
 
+
 ## **Usage**
 1° Open a console/terminal.
 
@@ -61,6 +68,7 @@ $ sudo cp ymp3cli.sh /usr/local/bin/ymp3cli.sh
 ```bash
 $ ymp3cli.sh
 ```
+
 
 ## **License**
 [MIT](https://choosealicense.com/licenses/mit/)
