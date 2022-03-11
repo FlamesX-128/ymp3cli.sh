@@ -27,17 +27,51 @@
 
 ### GLOBAL VARIABLES ###
 
-dependencies=('curl' 'diff' 'flyingrub/scdl' 'mpv' 'tput' 'spotdl' 'youtube-dl')
+base_url='https://raw.githubusercontent.com/ymp3cli-addons-sh'
 
 main_directory="$PWD"
 musics=()
 
-version='1.1.0'
+# VARIABLES OF ADDONS
+pIDrp=''
+
+# PROJECT
+dependencies=('curl' 'diff' 'flyingrub/scdl' 'mpv' 'tput' 'spotdl' 'youtube-dl')
+version='1.2.0'
+
 
 ### FLAG HANDLER ###
 
-while getopts 'dhuv' opt; do
+while getopts 'aA:dhuv' opt; do
   case "$opt" in
+  A)
+    if ! curl --output /dev/null --silent --head --fail "$base_url/$OPTARG/master/execute.sh"; then
+      printf "The plugin \"$OPTARG\" does not exist"
+
+      exit
+    fi
+
+    [ ! -d 'ymp3cli-addons' ] && mkdir -p 'ymp3cli-addons'
+    cd 'ymp3cli-addons'
+
+    [ ! -d "$OPTARG" ] && mkdir -p "$OPTARG"
+    cd "$OPTARG"
+
+    curl -o "$OPTARG.sh" "$base_url/$OPTARG/master/execute.sh"
+    ;;
+  
+  a)
+    printf '%s\n' 'These are the available ymp3cli.sh addons:'
+
+    while IFS= read -r line; do
+      printf '%s\n' " ↳ ${line: +6}"
+
+    done <<-EOF
+      rich-presence - Adds presence on discord.
+		EOF
+
+    ;;
+
   d)
     printf '%s\n' 'Dependencies:'
 
@@ -56,10 +90,15 @@ while getopts 'dhuv' opt; do
 	    Download and listen music/songs from the console/terminal.
 
       Usage:
-        ymp3cli.sh -d | -h | -u | -v
+        ymp3cli.sh -A [addon-name]
+
+        ymp3cli.sh -a | -d | -h | -u | -v
         ymp3cli.sh
 
       Flags:
+        -A  Download an addon.
+
+        -a  Show the list of available addons.
         -d  Show project dependencies.
         -h  Show help about the cli.
         -u  Update the cli.
@@ -147,6 +186,23 @@ show_musics()
 }
 
 
+### ADDON HANDLER ###
+
+rich_presence_addon()
+{
+  local directory="$main_directory/ymp3cli-addons/rich-presence"
+
+  if [ -d "$directory" ]; then
+    cd "$directory"
+
+    ./'execute.sh' "\"$1\"" &
+  fi
+
+  cd "$main_directory"
+  pIDrp=$!
+}
+
+
 ### MAIN ###
 
 if command -v curl &> /dev/null; then
@@ -220,8 +276,10 @@ while true; do
     show_musics 'Playing the following music/song'
 
     for file in "${musics[@]}"; do
+      rich_presence_addon "${file:6:-5}"
       mpv --no-video "$file"
 
+      [ ! "$pIDrp" = '' ] && kill $pIDrp
     done
 
     ;;
@@ -236,8 +294,10 @@ while true; do
     validate_number $resp2 ${#musics[@]}
   
     for (( i = $(( resp - 1 )); i < $resp2; i++ )); do
+      rich_presence_addon "${musics[$i]:6:-5}"
       mpv --no-video "${musics[$i]}"
 
+      [ ! "$pIDrp" = '' ] && kill $pIDrp
     done
 
     ;;
@@ -248,15 +308,21 @@ while true; do
     printf ' ↳ '
     read -r resp
 
-    if ! [[ "$resp" =~ '^[!0-9]+$' ]]; then
+    if ! [[ "$resp" =~ '^[0-9]+$' ]]; then
       validate_number $resp ${#musics[@]}
 
-      mpv --no-video "${musics[$(( resp - 1 ))]}"
+      music_url="${musics[$(( resp - 1 ))]}"
+
+      rich_presence_addon "${music_url:6:-5}"
+      mpv --no-video "$music_url"
 
     else
+      rich_presence_addon "$resp"
       mpv --no-video "$resp"
 
     fi
+
+    [ ! "$pIDrp" = '' ] && kill $pIDrp
 
     ;;
   

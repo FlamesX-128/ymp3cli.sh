@@ -6,12 +6,12 @@ Inspired in "paij0se/ymp3cli", "ymp3cli.sh" is a cli created in "shell script" t
 The original project is of [paij0se](https://github.com/paij0se), please go to the [ymp3cli](https://github.com/paij0se/ymp3cli) repository and give your star.
 
 
-## **v1.1.0 Changelog**
-These are the new features of v1.1.0.
+## **v1.2.0 Changelog**
+These are the new features of v1.2.0.
 
-- New option to download music/sound from soundcloud using [flyingrub/scdl](https://github.com/flyingrub/scdl).
-- [ymp3cli.sh](https://ymp3cli.tk/) stats integrated.
-- Slight code optimization.
+- Added addon handler prototype:
+  + With the "-a" flag you can see the list of plugins.
+  + With the "-A" flag you can download a plugin.
 
 ## **Preview**
 This is how "ymp3cli.sh" looks.
