@@ -37,7 +37,7 @@ pIDrp=''
 
 # PROJECT
 dependencies=('curl' 'diff' 'flyingrub/scdl' 'mpv' 'tput' 'spotdl' 'youtube-dl')
-version='1.2.1'
+version='1.2.2'
 
 
 ### FLAG HANDLER ###
@@ -58,6 +58,7 @@ while getopts 'aA:dhuv' opt; do
     cd "$OPTARG"
 
     curl -o 'execute.sh' "$base_url/$OPTARG/master/execute.sh"
+    chmod +x ./execute.sh
     ;;
   
   a)
@@ -195,7 +196,7 @@ rich_presence_addon()
   if [ -d "$directory" ]; then
     cd "$directory"
 
-    ./'execute.sh' "\"$1\"" &
+    ./execute.sh "\"$1\"" &
   fi
 
   cd "$main_directory"
