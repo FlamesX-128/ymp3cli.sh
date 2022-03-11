@@ -15,8 +15,8 @@ These are the new features of v1.2.1 and v1.2.2.
 These are the new features of v1.2.0.
 
 - Added addon handler prototype:
-  + With the "-a" flag you can see the list of plugins.
-  + With the "-A" flag you can download a plugin.
+  + With the "-a" flag you can see the list of addons.
+  + With the "-A" flag you can download a addons.
 
 ## **Preview**
 This is how "ymp3cli.sh" looks.
