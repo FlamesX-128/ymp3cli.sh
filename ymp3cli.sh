@@ -37,7 +37,7 @@ pIDrp=''
 
 # PROJECT
 dependencies=('curl' 'diff' 'flyingrub/scdl' 'mpv' 'tput' 'spotdl' 'youtube-dl')
-version='1.2.0'
+version='1.2.1'
 
 
 ### FLAG HANDLER ###
@@ -57,7 +57,7 @@ while getopts 'aA:dhuv' opt; do
     [ ! -d "$OPTARG" ] && mkdir -p "$OPTARG"
     cd "$OPTARG"
 
-    curl -o "$OPTARG.sh" "$base_url/$OPTARG/master/execute.sh"
+    curl -o 'execute.sh' "$base_url/$OPTARG/master/execute.sh"
     ;;
   
   a)
